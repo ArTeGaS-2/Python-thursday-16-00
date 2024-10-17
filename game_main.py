@@ -3,7 +3,28 @@ import sys
 import random
 from pygame.locals import *
 
+# Метод для обрахунку анімації
+def Slime_Animation():
+    if moving:
+        animation_phase += animation_speed
+        if animation_phase >= 360:
+            animation_phase = 0
+    
+        # Розрахунок масштабу за допомогою синусоїди
+        scale_x = 0.8 + 0.5 * pygame.math.sin(
+            pygame.math.radians(animation_phase))
+        scale_y = 1.3 - 0.5 * pygame.math.sin(
+            pygame.math.radians(animation_phase))
+        
+        # Застосування масштабування у напрямку руху
+        # Визначаємо, чи рухаємось горизонтально, чи вертикально для масштабування
+        if direction == 0 or direction == 180:
+            return
+
 pygame.init() # Ініціалізація бібліотеки
+
+animation_phase = 0 # Фаза анімації
+animation_speed = 5 # Швидкість анімації
 
 clock = pygame.time.Clock() # Додавання лічильника
 start_ticks = pygame.time.get_ticks()
@@ -67,35 +88,68 @@ while running:
     # Отримання стану клавіш
     keys = pygame.key.get_pressed()
 
-    # Рух на WASD у восьми напрямках
-    if keys[pygame.K_w] and keys[pygame.K_a]: # Вгору-вліво
-        slime_x -= SPEED // 1.414 + speedMultiplier
-        slime_y -= SPEED // 1.414 + speedMultiplier
+    # Визначення на прямку руху
+    moving = False
+    dx, dy = 0, 0
 
-    elif keys[pygame.K_w] and keys[pygame.K_d]: # Вгору-вправо
-        slime_x += SPEED // 1.414 + speedMultiplier
-        slime_y -= SPEED // 1.414 + speedMultiplier
-    elif keys[pygame.K_s] and keys[pygame.K_a]: # Вниз-вліво
-        slime_x -= SPEED // 1.414 + speedMultiplier
-        slime_y += SPEED // 1.414  + speedMultiplier
-    elif keys[pygame.K_s] and keys[pygame.K_d]: # Вниз-вправо
-        slime_x += SPEED // 1.414 + speedMultiplier
-        slime_y += SPEED // 1.414 + speedMultiplier
+    # Рух на WASD у восьми напрямках
+    if keys[pygame.K_w] and keys[pygame.K_a]:
+        dx = -SPEED // 1.414
+        dy = -SPEED // 1.414
+        direction = 225 # Вгору-вліво
+        moving = True
+    elif keys[pygame.K_w] and keys[pygame.K_d]:
+        dx = SPEED // 1.414
+        dy = -SPEED // 1.414
+        direction = 315 # Вгору-вправо
+        moving = True
+    elif keys[pygame.K_s] and keys[pygame.K_a]:
+        dx = -SPEED // 1.414
+        dy = SPEED // 1.414
+        direction = 135 # Вниз-вліво
+        moving = True
+    elif keys[pygame.K_s] and keys[pygame.K_d]:
+        dx = SPEED // 1.414
+        dy = SPEED // 1.414
+        direction = 45 # Вниз-вправо
+        moving = True
 
     elif keys[pygame.K_w]:
-        slime_y -= SPEED + speedMultiplier
+        dy = -SPEED
+        direction = 270 # Вгору
+        moving = True
     elif keys[pygame.K_s]:
-        slime_y += SPEED + speedMultiplier
+        dy = SPEED
+        direction = 90 # Вниз
+        moving = True
     elif keys[pygame.K_a]:
-        slime_x -= SPEED + speedMultiplier
+        dx = -SPEED
+        direction = 180 # Вліво
+        moving = True
     elif keys[pygame.K_d]:
-        slime_x += SPEED + speedMultiplier
+        dx = SPEED
+        direction = 0 # Вправо
+        moving = True
+
+    # Оновлення позиції слайма
+    slime_x += dx
+    slime_y += dy
+
+    # Обертання спрайта у напряму руху
+    if moving:
+        rotated_slime = pygame.transform.rotate(
+            slime_image,
+            -direction)
+    # Без обертання, якщо не рухається
+    else:
+        rotated_slime = slime_image
 
     # Отримуємо прямокутник спрайта
-    slime_rect = slime_image.get_rect(center=(slime_x, slime_y))
+    slime_rect = rotated_slime.get_rect(
+        center=(slime_x, slime_y))
 
     # Малювання спрайта на екрані
-    screen.blit(slime_image, slime_rect)
+    screen.blit(rotated_slime, slime_rect)
 
     pygame.display.flip() # Оновлення дисплею
 
