@@ -25,7 +25,7 @@ def load_slime_image():
     slime_image = pygame.image.load('slime.png').convert_alpha()
     return pygame.transform.scale(slime_image,(slime_size, slime_size))
 
-def slime_movement(keys, slime_x, slime_y, SPEED, current_direction):
+def slime_movement(keys, slime_x, slime_y, SPEED, direction):
     # Визначення на прямку руху
     moving = False
     dx, dy = 0, 0
@@ -80,6 +80,31 @@ def lerp(a, b, t):
 
 def animate_slime(moving, direction, slime_image, slime_x,slime_y,
                   current_scale_x, current_scale_y):
+    if moving: # Перевіряє чи відбувається рух
+        if direction in [0, 180]: # Горизонтальний рух
+            target_scale_x, target_scale_y = 1.3, 0.8
+        elif direction in [90, 270]: # Вертикальний рух
+            target_scale_x, target_scale_y = 1.3, 0.8
+        else: # Діагональний рух
+            target_scale_x, target_scale_y = 1.3, 0.8
+    else: # Якщо рух не відбувається 
+        target_scale_x, target_scale_y = 1.0, 1.0
+    # Поступове оновлення масштабів за допомогою лінійної інтерполяції
+    new_scale_x = lerp(current_scale_x, target_scale_x, ANIMATION_SPEED)
+    new_scale_y = lerp(current_scale_y, target_scale_y, ANIMATION_SPEED)
+
+    # Спочатку масштабування
+    scaled_image = pygame.transform.scale(
+        slime_image, (int(slime_size * new_scale_x),
+                      int(slime_size * new_scale_y)))
+    # Потім обертання
+    if direction is not None:
+        rotated_slime = pygame.transform.rotate(scaled_image, direction)
+    else:
+        rotated_slime = scaled_image
+    slime_rect = rotated_slime.get_rect(center=(slime_x, slime_y))
+    return rotated_slime, slime_rect, new_scale_x, new_scale_y
+
     
 # Ініціалізація гри
 screen = init_game()
@@ -114,11 +139,17 @@ while running:
 
     # Отримання стану клавіш
     keys = pygame.key.get_pressed()
+
     slime_x, slime_y, direction, moving = slime_movement(
         keys, slime_x, slime_y, SPEED, direction)
+    
+    # Анімація слайма з поступовим розтягуванням
+    slime, slime_rect, current_scale_x, current_scale_y = animate_slime(
+        moving, direction, slime_image, slime_x, slime_y,
+        current_scale_x, current_scale_y)
 
     # Малювання спрайта на екрані
-    screen.blit(rotated_slime, slime_rect)
+    screen.blit(slime, slime_rect)
 
     pygame.display.flip() # Оновлення дисплею
 
