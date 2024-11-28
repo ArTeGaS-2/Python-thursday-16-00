@@ -181,12 +181,12 @@ while running:
         last_spawn_time = current_time
 
     # Малювання всіх об'єктів на екрані
-        for obj_rect in objects[:]:
-            screen.blit(object_image, obj_rect.topleft)
-            # Перевірка на зіткнення
-            if check_collision(slime_rect, obj_rect):
-                objects.remove(obj_rect) # Видалення об'єкту при зіткненні
-                collected_objects += 1 # Збільшення лічильника зібраних об'єктів
+    for obj_rect in objects[:]:
+        screen.blit(object_image, obj_rect.topleft)
+        # Перевірка на зіткнення
+        if check_collision(slime_rect, obj_rect):
+            objects.remove(obj_rect) # Видалення об'єкту при зіткненні
+            collected_objects += 1 # Збільшення лічильника зібраних об'єктів
 
     # Виведення кількості зібраних об'єктів на екран
     font = pygame.font.SysFont(None, 36)
