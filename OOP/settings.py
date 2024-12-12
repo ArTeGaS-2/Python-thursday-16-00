@@ -6,11 +6,12 @@ background_color = (255, 255, 255)
 background_color_2 = '#B6FEFF'
 
 # Масштабування спрайта до бажаного розміру
-slime_size = 60
+slime_size = (60, 60)
+OBJECT_SIZE = (30, 30)
 
 # Швидкість слайма
 SPEED = 5
-ANIMATTION_SPEED = 0.1
+ANIMATION_SPEED = 0.1
 
 spawn_interval = 1 # Інтервал появи об'єктів (у секундах)
 
