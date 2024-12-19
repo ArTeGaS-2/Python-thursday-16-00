@@ -11,6 +11,7 @@ class GameObject(Entity):
     def __init__(self):
         # Наслідуємо класс Entity, передаємо йому данні налаштувань
         super().__init__(OBJECT_IMAGE_PATH, OBJECT_SIZE)
+        self.rect.topleft = self.spawn()
 
     # Визначає координати
     def spawn(self):
