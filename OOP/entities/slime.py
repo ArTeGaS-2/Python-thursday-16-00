@@ -1,12 +1,12 @@
 import pygame
-from settings import slime_size, SPEED, ANIMATION_SPEED
-from settings import SLIME_IMAGE_PATH, WIDTH, HEIGHT
+from settings import (slime_size, SPEED, ANIMATION_SPEED,
+                    SLIME_IMAGE_PATH, WIDTH, HEIGHT)
 from entities.entity import Entity
 import math
 
 class Slime(Entity):
     def __init__(self, x, y):
-        super.__init__(SLIME_IMAGE_PATH, slime_size)
+        super().__init__(SLIME_IMAGE_PATH, slime_size)
         self.rect.center = (x, y) # Визначаємо центр зображення
         self.direction = 0 # Кут в градусах
         self.moving = False # Перевіряє стан руху. Чи рухається персонаж
@@ -65,8 +65,8 @@ class Slime(Entity):
         # Масштабування зображення
         scaled_image = pygame.transform.scale(
             self.original_image,
-            (int(slime_size * self.current_scale_x),
-             int(slime_size * self.current_scale_y)))
+            (int(slime_size[0] * self.current_scale_x),
+             int(slime_size[1] * self.current_scale_y)))
         
         # Обертання зображення відповідно до напряму руху
         rotated_image = pygame.transform.rotate(scaled_image, self.direction)

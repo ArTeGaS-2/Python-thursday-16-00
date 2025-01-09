@@ -16,8 +16,8 @@ ANIMATION_SPEED = 0.1
 spawn_interval = 1 # Інтервал появи об'єктів (у секундах)
 
 # Шляхи до зображень
-SLIME_IMAGE_PATH = 'assets/slime.png'
-OBJECT_IMAGE_PATH = 'assets/object.png'
+SLIME_IMAGE_PATH = 'OOP/assets/slime.png'
+OBJECT_IMAGE_PATH = 'OOP/assets/object.png'
 
 # Фреймрейт - кадри на секунду
 FPS = 60
