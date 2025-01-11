@@ -27,9 +27,9 @@ class Slime(Entity):
         if keys[pygame.K_s] or keys[pygame.K_DOWN]:
             self.velocity.y = 1 # Рух вниз
         if keys[pygame.K_a] or keys[pygame.K_LEFT]:
-            self.velocity.y = -1 # Рух ліворуч
+            self.velocity.x = -1 # Рух ліворуч
         if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
-            self.velocity.y = 1 # Рух праворуч
+            self.velocity.x = 1 # Рух праворуч
         # Якщо вектор швидкості не нульовий
         if self.velocity.length_squared() > 0:
             # Нормалізація та застосування швидкості

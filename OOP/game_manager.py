@@ -33,7 +33,7 @@ class GameManager:
             self.handle_events()
             self.update()
             self.draw()
-            pygame.display.flip
+            pygame.display.flip()
         pygame.quit()
 
     # Основний обробник подій

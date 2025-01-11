@@ -2,7 +2,7 @@
 WIDTH, HEIGHT = 800, 600 # Ширина і висота
 
 # Колір фону
-background_color = (255, 255, 255)
+background_color = (200, 235, 255)
 background_color_2 = '#B6FEFF'
 
 # Масштабування спрайта до бажаного розміру
