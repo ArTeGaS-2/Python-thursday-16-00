@@ -1,9 +1,12 @@
 import pygame
 from settings import (
     WIDTH, HEIGHT, background_color,
-    spawn_interval, FPS)
+    spawn_interval, FPS, BACKGROUND_IMAGE)
 from entities.slime import Slime
 from entities.game_object import GameObject
+
+# Імпортуємо класи ворогів
+from entities.vertical_enemy import VerticalEnemy
 
 class GameManager:
     def __init__(self):
@@ -17,18 +20,32 @@ class GameManager:
         # Створення спрайт-груп
         self.all_sprites = pygame.sprite.Group()
         self.collectibles = pygame.sprite.Group()
+        # Група ворогів
+        self.enemies = pygame.sprite.Group()
 
         # Створення слайма
         self.slime = Slime(WIDTH // 2, HEIGHT // 2)
         self.all_sprites.add(self.slime)
 
+        # Створюємо ворогів і додаємо їх у групи
+        vertical_enemy = VerticalEnemy() # Екземпляр 
+        self.all_sprites.add(vertical_enemy) 
+        self.enemies.add(vertical_enemy) 
+
         self.last_spawn_time = pygame.time.get_ticks() # Час від останнього спавну
         self.collected_objects = 0 # Кількість зібраних об'єктів
+
+        self.background_image = pygame.image.load(BACKGROUND_IMAGE)
+        self.background_image = pygame.transform.scale(
+            self.background_image, (1550, 780))
 
     # Метод запуску основного ігрового циклу
     def run(self):
         running = True
         while running:
+            # Малювання фону
+            self.screen.blit(self.background_image, (0,0))
+
             self.clock.tick(FPS)
             self.handle_events()
             self.update()
@@ -61,7 +78,7 @@ class GameManager:
         self.collected_objects += len(collided)
 
     def draw(self):
-        self.screen.fill(self.background_color)
+        #self.screen.fill(self.background_color)
         self.all_sprites.draw(self.screen)
         self.display_score()
 

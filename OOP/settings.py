@@ -1,5 +1,5 @@
 # Розміри вікна
-WIDTH, HEIGHT = 800, 600 # Ширина і висота
+WIDTH, HEIGHT = 1550, 780 # Ширина і висота
 
 # Колір фону
 background_color = (200, 235, 255)
@@ -18,7 +18,13 @@ spawn_interval = 1 # Інтервал появи об'єктів (у секун�
 # Шляхи до зображень
 SLIME_IMAGE_PATH = 'OOP/assets/slime.png'
 OBJECT_IMAGE_PATH = 'OOP/assets/object.png'
+BACKGROUND_IMAGE = 'OOP/assets/background.png'
 
 # Фреймрейт - кадри на секунду
 FPS = 60
+
+# Параметри вертикального ворога
+ENEMY_IMAGE_PATH = 'OOP/assets/enemy.png'
+ENEMY_SIZE = (50,50)
+VERTICAL_ENEMY_SPEED = 5
 
