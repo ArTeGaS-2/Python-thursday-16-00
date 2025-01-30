@@ -7,6 +7,7 @@ from entities.game_object import GameObject
 
 # Імпортуємо класи ворогів
 from entities.vertical_enemy import VerticalEnemy
+from entities.patrol_enemy import PatrolEnemy
 
 class GameManager:
     def __init__(self):
@@ -30,7 +31,16 @@ class GameManager:
         # Створюємо ворогів і додаємо їх у групи
         vertical_enemy = VerticalEnemy() # Екземпляр 
         self.all_sprites.add(vertical_enemy) 
-        self.enemies.add(vertical_enemy) 
+        self.enemies.add(vertical_enemy)
+
+        patrol_points = [
+            (100, 100),
+            (WIDTH - 100, 100),
+            (WIDTH - 100, HEIGHT - 100),
+            (100, HEIGHT - 100)]
+        patrol_enemy = PatrolEnemy(patrol_points)
+        self.all_sprites.add(patrol_enemy)
+        self.enemies.add(patrol_enemy)
 
         self.last_spawn_time = pygame.time.get_ticks() # Час від останнього спавну
         self.collected_objects = 0 # Кількість зібраних об'єктів
