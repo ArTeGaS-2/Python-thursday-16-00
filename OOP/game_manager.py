@@ -9,6 +9,9 @@ from entities.game_object import GameObject
 from entities.vertical_enemy import VerticalEnemy
 from entities.patrol_enemy import PatrolEnemy
 
+# Скрімер
+from entities.screamer import Screamer
+
 class GameManager:
     def __init__(self):
         pygame.init()
@@ -21,6 +24,11 @@ class GameManager:
         # Створення спрайт-груп
         self.all_sprites = pygame.sprite.Group()
         self.collectibles = pygame.sprite.Group()
+
+        # Створюємо скрімер
+        self.screamer = Screamer()
+        self.screamer.resize(WIDTH, HEIGHT)
+
         # Група ворогів
         self.enemies = pygame.sprite.Group()
 
@@ -87,10 +95,24 @@ class GameManager:
             self.slime, self.collectibles, True)
         self.collected_objects += len(collided)
 
+        # Перевірка зіткнень з ворогами
+        collided_found = False
+        for enemy in self.enemies:
+            if pygame.sprite.collide_rect(self.slime, enemy):
+                enemy.handle_collision_with_player(self.slime)
+                collided_found = True
+
+        if collided_found:
+            self.screamer.activate()
+        else:
+            self.screamer.deactivate()
+
+
     def draw(self):
         #self.screen.fill(self.background_color)
         self.all_sprites.draw(self.screen)
         self.display_score()
+        self.screamer.draw(self.screen)
 
     def display_score(self):
         text = self.font.render(f'Зібрано: {self.collected_objects}',
