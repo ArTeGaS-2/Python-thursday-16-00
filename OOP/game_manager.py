@@ -8,6 +8,7 @@ from entities.game_object import GameObject
 # Імпортуємо класи ворогів
 from entities.vertical_enemy import VerticalEnemy
 from entities.patrol_enemy import PatrolEnemy
+from entities.crow_enemy import CrowEnemy
 
 # Скрімер
 from entities.screamer import Screamer
@@ -49,6 +50,10 @@ class GameManager:
         patrol_enemy = PatrolEnemy(patrol_points)
         self.all_sprites.add(patrol_enemy)
         self.enemies.add(patrol_enemy)
+
+        crow_enemy = CrowEnemy(self.slime)
+        self.all_sprites.add(crow_enemy)
+        self.enemies.add(crow_enemy)
 
         self.last_spawn_time = pygame.time.get_ticks() # Час від останнього спавну
         self.collected_objects = 0 # Кількість зібраних об'єктів

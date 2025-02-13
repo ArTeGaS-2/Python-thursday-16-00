@@ -1,7 +1,7 @@
 import pygame
 import math
 from entities.enemy import Enemy
-from settings import (VERTICAL_ENEMY_SPEED,
+from settings import (PATROL_ENEMY_SPEED,
                       ENEMY_IMAGE_PATH,ENEMY_SIZE)
 
 class PatrolEnemy(Enemy):
@@ -12,7 +12,7 @@ class PatrolEnemy(Enemy):
     def __init__(self, patrol_points):
         super().__init__(ENEMY_IMAGE_PATH, ENEMY_SIZE)
 
-        self.speed = VERTICAL_ENEMY_SPEED # Швидкість
+        self.speed = PATROL_ENEMY_SPEED # Швидкість
         self.patrol_points = patrol_points # Точки маршруту
         self.current_index = 0 # Поточна точка маршруту у списку
 
@@ -32,7 +32,7 @@ class PatrolEnemy(Enemy):
         dy = target[1] - self.rect.centery
 
         distance = math.hypot(dx, dy)
-        if distance < 1:
+        if distance < self.speed:
             # Якщо дійшли до точки - переключаємось
             self.current_index = (self.current_index + 1
                 ) % len(self.patrol_points)
