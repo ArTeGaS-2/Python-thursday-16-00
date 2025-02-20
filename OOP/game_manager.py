@@ -13,6 +13,9 @@ from entities.crow_enemy import CrowEnemy
 # Скрімер
 from entities.screamer import Screamer
 
+import os
+os.environ['SDL_VIDEO_CENTERED'] = '1'
+
 class GameManager:
     def __init__(self):
         pygame.init()

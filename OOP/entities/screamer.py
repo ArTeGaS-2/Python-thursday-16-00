@@ -6,8 +6,8 @@ class Screamer:
         self.active = False
 
         # Завантажуємо зображення
-        self.image = pygame.image.load("OOP/assets/screamer.png").convert_alpha()
-
+        self.image = pygame.image.load("OOP/assets/screamer.png"
+                                       ).convert_alpha()
         # Завантажуємо звук
         self.sound = pygame.mixer.Sound("OOP/assets/screamer.mp3")
         # Регулюємо гучнічть від 0 до 1
