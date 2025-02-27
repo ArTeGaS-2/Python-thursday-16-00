@@ -16,6 +16,8 @@ from entities.screamer import Screamer
 import os
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
+from entities.buttons import PauseButton, ExitButton
+
 class GameManager:
     def __init__(self):
         pygame.init()
@@ -64,6 +66,17 @@ class GameManager:
         self.background_image = pygame.image.load(BACKGROUND_IMAGE)
         self.background_image = pygame.transform.scale(
             self.background_image, (1550, 780))
+        
+        # Стан паузи
+        self.pause = False
+
+        # Створюємо кнопки - задаємо шляхи до зображень та позицію
+        self.pause_button = PauseButton(
+            "OOP/assets/ingame_pause_button.png",
+            (WIDTH - 120, 10), self.pause)
+        self.exit_button = ExitButton(
+            "OOP/assets/ingame_exit_button.png",
+            (WIDTH - 60, 10))
 
     # Метод запуску основного ігрового циклу
     def run(self):
