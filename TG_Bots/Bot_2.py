@@ -3,9 +3,7 @@ from telegram import Update
 from telegram.ext import (Application, CommandHandler,
                            MessageHandler, ContextTypes,
                              filters)
-
 openai.api_key = ''
-
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     context.user_data["history"] = [{
@@ -27,9 +25,9 @@ async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as e:
         await update.message.reply_text(f"Виникла помилка: {e}")
 
-def main():
-    TOKEN = ''
-    app = Application.builder().token(TOKEN).build()
+def main():                                    # pip install python-telegram-bot
+    TOKEN = ''                                 # pip install openai
+    app = Application.builder().token(TOKEN).build()    #tcv-mczn-smg
 
     app.add_handler(CommandHandler("start", start))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, chat))
