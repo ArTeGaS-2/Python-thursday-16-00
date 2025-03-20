@@ -1,10 +1,10 @@
-import openai
+from openai import OpenAI
 from telegram import Update
 from telegram.ext import (Application, CommandHandler,
                            MessageHandler, ContextTypes,
                              filters)
 # Додаємо API та Токен
-openai.api_key = ''
+client = OpenAI(api_key='')
 TOKEN = ''
 # Історія чату у вигляді словника
 chat_histories = {}
@@ -31,13 +31,10 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Базова інструкція
     system_message = {"role": "system",
                 "content": "Ти допоміжний бот, відповідаєш коротко та зрозуміло"}
-    # Формуємо історію запиту
-    if chat_id not in chat_histories or len(chat_histories[chat_id]) == 1:
-        messages = [system_message] + chat_histories[chat_id]
-    else:
-        messages = [system_message] + chat_histories[chat_id]
+    history = chat_histories.get(chat_id,[])
+    messages = [system_message] + history
     try:
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-4o-mini", # Назва моделі
             messages=messages, # повідомлення
             max_tokens=150, # Максисальна кількість токенів відповіді моделі
