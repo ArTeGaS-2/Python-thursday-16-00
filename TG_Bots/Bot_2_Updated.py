@@ -35,10 +35,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     messages = [system_message] + history
     try:
         response = client.chat.completions.create(
-            model="gpt-4o-mini", # Назва моделі
-            messages=messages, # повідомлення
-            max_tokens=150, # Максисальна кількість токенів відповіді моделі
-            temperature=0.7) # Точність/креативність відповіді
+            model="o3-mini", # Назва моделі
+            messages=messages) # повідомлення
         reply = response.choices[0].message.content.strip()
     except Exception as e:
         reply = f"Виникла помилка:{e}"

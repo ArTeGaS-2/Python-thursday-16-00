@@ -25,3 +25,45 @@ async def chat(update: Update, context:ContextTypes.DEFAULT_TYPE):
     Додає повідомлення користувача до історії, надсилає запит
     до API Groqcloud та повертає відповідь.
     """
+    user_input = update.message.text.strip()
+
+    # Отримуємо історію діалогу або створюємо нову, якщо її немає
+    history = context.user_data.get("history",[])
+    # Додаємо повідомлення користувача до історії
+    history.append({"role": "user", "content": user_input})
+
+    # Формуємо JSON_payload для запиту до Groqcloud
+    payload = {
+        "model": "llama-3.3-70b-versatile",
+        "messages": history
+    }
+    headers = {
+        "Authorization": f"Bearer {GROCLOUD_API_KEY}",
+        "Content-Type": "application/json"
+    }
+    async with httpx.AsyncClient() as client:
+        try:
+            response = await client.post(
+                GROCLOUD_ENDPOINT, json=payload, headers=headers)
+            response.raise_for_status()
+            data = response.json()
+            reply = data["choices"][0]["message"]["Content"].strip()
+            history.append[{"role": "assistant", "content": reply}]
+
+            await update.message.reply_text(reply)
+        except Exception as e:
+            await update.message.reply_text(f"Виникла проблема: {e}")
+
+def main():                         
+    TOKEN = ""          
+    app = Application.builder().token(TOKEN).build()    
+
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, chat))
+
+    app.run_polling()
+
+if __name__ == "__main__":
+    main()
+
+
