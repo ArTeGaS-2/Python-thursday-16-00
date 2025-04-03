@@ -3,11 +3,11 @@ from telegram import Update
 from telegram.ext import (Application, CommandHandler,
                            MessageHandler, ContextTypes,
                              filters)
-
+import os
 # Ключ API для Groqcloud
-GROCLOUD_API_KEY = ''
+GROCLOUD_API_KEY = os.environ['GROCLOUD_API_KEY']
 # URL API Groqcloud - приклад, адаптуємо згідно з документацією.
-GROCLOUD_ENDPOINT = 'https://api.groqcloud.com/v1/chat'
+GROCLOUD_ENDPOINT='https://api.groq.com/openai/v1/chat/completions'
 
 async def start(update: Update, context:ContextTypes.DEFAULT_TYPE):
     """
@@ -55,11 +55,12 @@ async def chat(update: Update, context:ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text(f"Виникла проблема: {e}")
 
 def main():                         
-    TOKEN = ""          
+    TOKEN = os.environ['TOKEN']       
     app = Application.builder().token(TOKEN).build()    
 
     app.add_handler(CommandHandler("start", start))
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, chat))
+    app.add_handler(MessageHandler(
+        filters.TEXT & ~filters.COMMAND, chat))
 
     app.run_polling()
 
