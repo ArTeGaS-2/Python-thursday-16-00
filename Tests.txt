@@ -1,0 +1,100 @@
+1. Константа FPS дорівнює
+    a) 30
+    b) 45
+    +c) 60
+    d) 144
+2. ANIMATION_SPEED задає:
+    a) Частоту спавну
+    +b) Швидкість анімації
+    c) кількість ворогів
+    d) розмір об'єкту
+3. spawn_interval вимірюється в 
+    a) кадрах
+    +b) секундах
+    c) мілісекундах
+    d) пікселях
+4. Шлях до фонового зображення міститься у змінній:
+    +a) BACKGROUND_IMAGE
+    b) BACKGROUND_PATH
+    c) BG_IMG
+    d) LEVEL_BG
+5. Швидкість вертикального ворога задається константою
+    a) CROW_ENEMY_SPEED
+    b) PATROL_ENEMY_SPEED
+    +c) VERTICAL_ENEMY_SPEED
+    d) ENEMY_SPEED
+6. Базовий клас Entity наслідується від:
+    a) pygame.Surface
+    +b) pygame.sprite.Sprite
+    c) object
+    d) pygame.Rect
+7. Масштабування виконується через
+    a) pygame.transform.flip()
+    +b) pygame.transform.scale()
+    c) pygame.transform.rotate()
+    d) pygame.math.Vector2()
+8. У Slime.move() при натисканні W координата y
+    a) збільшується
+    +b) Зменшується
+    c) скидається до 0
+    d) не змінюється
+9. Змінна self.moving у Slime - це:
+    a) рядок
+    +b) логічна змінна
+    c) список
+    d) число
+10. Метод handle_collision_with_player у ворогів викликається, коли:
+    a) гра завершується
+    +b) ворог торкається прямокутника гравця
+    c) натискають Esc
+    d) FPS падає
+11. Головний цикл обробки подій виконує ітерацію через:
+    a) while True:
+    +b) for event in pygame.event.get():
+    c) for key in keys: pygame.event:
+    d) with
+12. Клас GameManager створює вікно у совєму
+    a) run()
+    b) start()
+    +c) __init__()
+    d) main_loop()
+13. Метод, що обмежує FPS, викликається через
+    +a) self.clock.tick(FPS)
+    b) time.sleep(FPS)
+    c) pygame.time.wait(FPS)
+    d) pass
+14. Об'єкти ворогів зберігаються, ймовірно, у
+    +a) pygame.sprite.Group()
+    b) dict()
+    c) set()
+    d) int
+15. При спавні об'єкта координати генеруються:
+    +a) через random.randint()
+    b) через pygame.mouse.get_pos()
+    c) послідовно через x++
+    d) фіксовані (400,300)
+16. У Bot_1.py головний об'єкт, що запускає бота, створюється класом:
+    a) Updater
+    +b) Application
+    c) Dispatcher
+    d) Bot
+17. Функція start у боті є:
+    a) синхронною
+    +b) асинхронною
+    c) класом
+    d) генератором
+18. Для відповіді, бот використовує метод
+    a) send_message()
+    +b) reply_text()
+    c) edit_message()
+    d) print()
+19. Запуск асинхронного застосунку здійснює метод
+    a) app.start_polling()
+    +b) app.run_polling()
+    c) app.idle()
+    d) app.begin()
+20. У боті Bot_3_groqAPI.py використано ключове слово для асинхронного запиту
+    +a) await
+    b) yield
+    c) global
+    d) pass

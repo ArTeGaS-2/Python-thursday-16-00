@@ -68,12 +68,12 @@ class GameManager:
             self.background_image, (1550, 780))
         
         # Стан паузи
-        self.pause = False
+        self.paused = False
 
         # Створюємо кнопки - задаємо шляхи до зображень та позицію
         self.pause_button = PauseButton(
             "OOP/assets/ingame_pause_button.png",
-            (WIDTH - 120, 10), self.pause)
+            (WIDTH - 120, 10), self)
         self.exit_button = ExitButton(
             "OOP/assets/ingame_exit_button.png",
             (WIDTH - 60, 10))
@@ -98,8 +98,13 @@ class GameManager:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
+            self.pause_button.handle_event(event)
+            self.exit_button.handle_event(event)
     
     def update(self):
+        if self.paused:
+            return
+
         keys = pygame.key.get_pressed()
         self.all_sprites.update(keys)
 
@@ -128,12 +133,14 @@ class GameManager:
         else:
             self.screamer.deactivate()
 
-
     def draw(self):
         #self.screen.fill(self.background_color)
         self.all_sprites.draw(self.screen)
         self.display_score()
         self.screamer.draw(self.screen)
+
+        self.pause_button.draw(self.screen)
+        self.exit_button.draw(self.screen)
 
     def display_score(self):
         text = self.font.render(f'Зібрано: {self.collected_objects}',
