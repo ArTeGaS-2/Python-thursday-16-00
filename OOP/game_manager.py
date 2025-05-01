@@ -73,10 +73,13 @@ class GameManager:
         # Створюємо кнопки - задаємо шляхи до зображень та позицію
         self.pause_button = PauseButton(
             "OOP/assets/ingame_pause_button.png",
-            (WIDTH - 120, 10), self)
+            (WIDTH - 240, 10), self)
         self.exit_button = ExitButton(
             "OOP/assets/ingame_exit_button.png",
-            (WIDTH - 60, 10))
+            (WIDTH - 120, 10))
+        self.pause_button.image = pygame.transform.scale(
+            self.pause_button.image, (128,128)
+        )
 
     # Метод запуску основного ігрового циклу
     def run(self):
