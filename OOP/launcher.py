@@ -71,6 +71,44 @@ class SettingsLauncher(tk.Tk):
                                            padx=5, pady=5)
             # Поле вводу, куди вставляємо поточне значення
             entry = tk.Entry(frame, width=40)
+            # Показує число або кортеж у форматі Python
+            entry.insert(0, repr(value))
+            entry.grid(row=row, column=1, padx=5, pady=5)
+            self.entries[key] = entry
+        
+        # Кнопка, що викликає save_settings при натисканні
+        tk.Button(self, text="Зберегти", command=self.save_settings
+                  ).pack(pady=10)
+        tk.Button(self, text="Запустити гру",
+                   command=self.launch_game).pack(pady=5)
+    
+    def save_settings(self):
+        try:
+            # Відкриваємо файл для запису (старі дані стираються)
+            with settings_path.open("w", encoding="utf-8") as f:
+                for key, entry in self.entries.items():
+                    raw_text = entry.get()
+                    try:
+                        value = ast.literal_eval(raw_text)
+                    except Exception:
+                        value = raw_text
+                    f.write(f"{key} = {repr(value)}\n")
+            
+            self.current_settings = load_settings()
+            messagebox.showinfo("Успіх", "Налаштування збережено.")
+        except Exception as e:
+            messagebox.showerror("Помилка",
+                                  f"Не вдалось зберегти:\n{e}")
+    def launch_game(self):
+        try:
+            subprocess.Popen(["python","OOP/main.py"])
+        except Exception as e:
+            messagebox.showerror("Помилка",
+                                  f"Не вдалось запустити гру:\n{e}")
+
+            
+        
+
 
 if __name__ == "__main__":
     SettingsLauncher().mainloop()
